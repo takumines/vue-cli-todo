@@ -5,7 +5,6 @@ let todoStorage = {
         let todos = JSON.parse(
             localStorage.getItem(STORAGE_KEY) || '[]'
         )
-        console.log('test')
         todos.forEach(function (todo, index) {
             todo.id = index
         })

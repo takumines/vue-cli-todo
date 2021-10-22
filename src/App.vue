@@ -1,6 +1,10 @@
 <template>
-  <div id="app">
+  <div>
     <h1>チュートリアルToDoリスト</h1>
+    <div v-for="(checkState, id) in checkStates" :key="id">
+      <label for="index"></label>
+      <input type="radio" id="index" :value="id" v-model="current">{{ checkState }}
+    </div>
     <table>
       <thead>
         <tr>
@@ -11,12 +15,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="todo in todos"
+        <tr v-for="todo in filteredTodo"
         :key="todo.id">
-          <td>{{ todo.id }}</td>
+          <th>{{ todo.id }}</th>
           <td>{{ todo.comment }}</td>
-          <td>{{ todo.state }}</td>
-          <td>削除</td>
+          <td>
+            <button @click="changeState(todo)">{{ state[Number(todo.state)] }}</button>
+          </td>
+          <td>
+            <button @click="removeTodo(todo.id)">削除</button>
+          </td>
         </tr>
       </tbody>
       <p>※削除する際はコントロールキーを押しながら削除してください。</p>
@@ -37,30 +45,56 @@ import todoStorage from "@/utlis";
 export default {
   data() {
     return {
-      todos: []
+      todos: [],
+      state: [
+        '作業中',
+        '完了'
+      ],
+      checkStates: [
+        '作業中',
+        '完了',
+        '全て'
+      ],
+      current: 2
     }
   },
   created() {
     this.todos = todoStorage.fetch()
   },
+  watch: {
+    todos(newTodos) {
+      todoStorage.save(newTodos)
+    }
+  },
+  computed: {
+    filteredTodo() {
+      return this.todos.filter(function (el) {
+        return this.current === 2 ? true : this.current === Number(el.state)
+      }, this)
+    }
+  },
   methods: {
     addTodo() {
-      let comment = this.$ref.commnet.value
-      if(comment === '') {
+      let comment = this.$refs.comment
+      if(comment.value === '') {
         return
       }
       let todo = {
-        id: todoStorage.uid,
-        comment: comment,
-        state: 0
+        id: todoStorage.uid++,
+        comment: comment.value,
+        state: false
       }
       this.todos.push(todo)
 
       comment.value = ''
+    },
+    removeTodo(todoId) {
+      this.todos.splice(this.todos.indexOf(todoId), 1)
+    },
+    changeState(todo) {
+      todo.state = !todo.state
+      todoStorage.save(this.todos)
     }
   },
 }
-
-<style>
-
-</style>
+</script>
