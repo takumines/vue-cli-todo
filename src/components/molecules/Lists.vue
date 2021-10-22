@@ -14,10 +14,16 @@
       <th>{{ todo.id }}</th>
       <td>{{ todo.comment }}</td>
       <td>
-        <button @click="changeState(todo)">{{ state[Number(todo.state)] }}</button>
+        <buttons
+          :buttonName="state[Number(todo.state)]"
+          @click="changeState(todo)"
+        ></buttons>
       </td>
       <td>
-        <button @click="removeTodo(todo.id)">削除</button>
+        <buttons
+            :buttonName="'削除'"
+            @click="removeTodo(todo.id)"
+        ></buttons>
       </td>
     </tr>
     </tbody>
@@ -27,9 +33,13 @@
 
 <script>
 import todoStorage from "@/utlis";
+import Buttons from "@/components/atoms/Buttons";
 
 export default {
   name: "lists",
+  components: {
+    Buttons
+  },
   props: {
     todos: {
       type: Array,

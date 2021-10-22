@@ -3,15 +3,22 @@
     <h2>新しいToDoの追加</h2>
     <label for="comment">コメント</label>
     <input type="text" id="comment" ref="comment">
-    <button type="submit">追加</button>
+    <buttons
+        :buttonName="'追加'"
+        :type="'submit'"
+    ></buttons>
   </form>
 </template>
 
 <script>
 import todoStorage from "@/utlis";
+import Buttons from "@/components/atoms/Buttons";
 
 export default {
   name: "Forms",
+  components: {
+    Buttons
+  },
   props: {
     todos: {
       type: Array,
