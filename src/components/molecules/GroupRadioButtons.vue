@@ -1,9 +1,8 @@
 <template>
   <div>
-    <div v-for="(checkState, id) in checkStates" :key="id">
-      <label for="index"></label>
-      <input type="radio" id="index" name="index" :value="id" @input="$emit('input', $event.target.value)">{{ checkState }}
-    </div>
+      <label v-for="(checkState, id) in checkStates" :key="id" for="index">
+        <input type="radio" id="index" name="index" :value="id" @input="$emit('input', $event.target.value)">{{ checkState }}
+      </label>
   </div>
 </template>
 

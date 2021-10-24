@@ -2,6 +2,7 @@
   <button
       @click="onClick"
       :type="type"
+      class="button"
   >{{ buttonName }}</button>
 </template>
 
@@ -28,5 +29,13 @@ export default {
 </script>
 
 <style scoped>
-
+button {
+  border: none;
+  border-radius: 20px;
+  line-height: 24px;
+  padding: 0 8px;
+  background: #0099e4;
+  color: #fff;
+  cursor: pointer;
+}
 </style>

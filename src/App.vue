@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div id="id">
     <headers></headers>
     <group-radio-buttons
         v-model.number="current"
         :checkStates="checkStates"
+        :todos="todos"
     ></group-radio-buttons>
     <lists
         :todos="todos"
@@ -56,3 +57,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+#app {
+  max-width: 640px;
+  margin: 0 auto;
+}
+</style>
